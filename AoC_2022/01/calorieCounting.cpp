@@ -4,7 +4,7 @@ const char defaultFilePath[] = "AoC_2022\\01\\input.txt";
 
 vector< vector<int> > parse(const char f[]){
 
-    ifstream inputStream(defaultFilePath);
+    ifstream inputStream(f);
     if( !inputStream.is_open() )
         abort();
 
