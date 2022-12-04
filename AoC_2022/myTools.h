@@ -42,3 +42,22 @@ void quickSort(vector<int> &vec, int low, int high){
     quickSort(vec, low, mid);
     quickSort(vec, mid+1, high);
 }
+
+int min(int a, int b){ return (a<b)?a:b; }
+
+int max(int a, int b){ return (a>b)?a:b; }
+
+vector<string> split2vec(string str, string delim = " "){
+
+    vector<string> v;
+
+    int start = 0, end = 0;
+    while(end != -1){
+
+        end = str.find(delim);
+        v.push_back( str.substr(start,end) );
+        str = str.substr(end + delim.size());
+    }
+
+    return v;
+}
