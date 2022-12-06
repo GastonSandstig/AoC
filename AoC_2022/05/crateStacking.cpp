@@ -56,11 +56,56 @@ void parse(const char f[], vector<vector<char>> &stack, vector<vector<int>> &ins
     return;
 }
 
+void createMover9000(vector<vector<char>> &s, vector<int> instr){
+
+    int noCrates = instr[0];
+    vector<char> &source    = s[instr[1] - 1];//correct for one-indexing -> zero-indexing
+    vector<char> &dest      = s[instr[2] - 1];
+
+    dest.insert(dest.end(), source.rbegin(), source.rbegin() + noCrates);
+    source.erase(source.end() - noCrates, source.end());
+}
+
+void createMover9000(vector<vector<char>> &s, vector<vector<int>> instrList){
+
+    for(vector<int> instr : instrList)
+        createMover9000(s, instr);
+}
+
+void createMover9001(vector<vector<char>> &s, vector<int> instr){
+
+    int noCrates = instr[0];
+    vector<char> &source    = s[instr[1] - 1];//correct for one-indexing -> zero-indexing
+    vector<char> &dest      = s[instr[2] - 1];
+
+    dest.insert(dest.end(), source.end() - noCrates, source.end());
+    source.erase(source.end() - noCrates, source.end());
+}
+
+void createMover9001(vector<vector<char>> &s, vector<vector<int>> instrList){
+
+    for(vector<int> instr : instrList)
+        createMover9001(s, instr);
+}
+
 int main(){
 
     vector<vector<char>> stacks;
     vector<vector<int>> instructions;
     parse(defaultFilePath, stacks, instructions);
+
+    vector<vector<char>> theoreticalStacks = stacks;
+    createMover9000(theoreticalStacks, instructions);
+    cout << "CrateMover 9000 would arrange the crates in order: ";
+    for(vector<char> s : theoreticalStacks)
+        cout << s.back();
+    cout << endl;
+
+    createMover9001(stacks, instructions);
+    cout << "CrateMover 9001 instead arranges the crates in order: ";
+    for(vector<char> s : stacks)
+        cout << s.back();
+    cout << endl;
 
     return 0;
 }
