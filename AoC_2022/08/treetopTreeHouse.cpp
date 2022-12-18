@@ -120,6 +120,8 @@ int cardinalGTEDist(vector<vector<int>> tGrid, int x, int y, Direction dir){
                 else break;
         }
     }
+    cerr << "cardinalGTEDist failed" << endl;
+    abort();
 }
 
 vector<vector<int>> getScenicScores(vector<vector<int>> tGrid){
