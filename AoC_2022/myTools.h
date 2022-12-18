@@ -74,6 +74,10 @@ int clamp(int val, int lb, int ub){
         return val;
 }
 
+bool btw(int val, int lb, int ub){
+    return (lb < val && val < ub) ? true : false;
+}
+
 vector<string> split2vec(string str, string delim = " "){
 
     vector<string> v;
