@@ -5,8 +5,10 @@ const char defaultFilePath[] = "AoC_20XX/YY/input.txt";
 void parse(const char f[]){
 
     ifstream inputStream(f);
-    if( !inputStream.is_open() )
+    if( !inputStream.is_open() ){
+        cerr << "fileread failed" << endl;
         abort();
+    }
 
     inputStream.close();
     return;

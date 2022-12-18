@@ -65,6 +65,15 @@ int max(vector<vector<int>> grid){
     return maxInt;    
 }
 
+int clamp(int val, int lb, int ub){
+    if(val < lb)
+        return lb;
+    else if(val > ub)
+        return ub;
+    else
+        return val;
+}
+
 vector<string> split2vec(string str, string delim = " "){
 
     vector<string> v;
