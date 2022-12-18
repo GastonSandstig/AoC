@@ -47,6 +47,24 @@ int min(int a, int b){ return (a<b)?a:b; }
 
 int max(int a, int b){ return (a>b)?a:b; }
 
+int max(vector<int> vec){
+    
+    int maxInt = vec[0];
+    for(int tmp : vec){
+        maxInt = max(maxInt, tmp);
+    }
+    return maxInt;
+}
+
+int max(vector<vector<int>> grid){
+
+    int maxInt = grid[0][0];
+    for(vector<int> row : grid){
+        maxInt = max(maxInt, max(row));
+    }
+    return maxInt;    
+}
+
 vector<string> split2vec(string str, string delim = " "){
 
     vector<string> v;

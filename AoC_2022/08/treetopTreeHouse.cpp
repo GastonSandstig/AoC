@@ -2,6 +2,8 @@
 
 const char defaultFilePath[] = "AoC_2022/08/input.txt";
 
+enum Direction {NORTH, WEST, SOUTH, EAST};
+
 constexpr uint8_t OBSC_N{ 1 << 0 };
 constexpr uint8_t OBSC_W{ 1 << 1 };
 constexpr uint8_t OBSC_S{ 1 << 2 };
@@ -82,11 +84,74 @@ int countVisible(vector<vector<uint8_t>> vGrid){
     return sum;
 }
 
+int cardinalGTEDist(vector<vector<int>> tGrid, int x, int y, Direction dir){
+
+    int qHeight = tGrid[x][y];
+    int dist = 0;
+    while(++dist){
+
+        switch(dir){
+            case NORTH:
+                if(x - dist < 0)
+                    return --dist;
+                else if (qHeight <= tGrid[x-dist][y])
+                    return dist;
+                else break;
+            
+            case WEST:
+                if(y - dist < 0)
+                    return --dist;
+                else if (qHeight <= tGrid[x][y-dist])
+                    return dist;
+                else break;
+
+            case SOUTH:
+                if(x + dist >= tGrid.size())
+                    return --dist;
+                else if (qHeight <= tGrid[x+dist][y])
+                    return dist;
+                else break;
+            
+            case EAST:
+                if(y + dist >= tGrid[0].size())
+                    return --dist;
+                else if (qHeight <= tGrid[x][y+dist])
+                    return dist;
+                else break;
+        }
+    }
+}
+
+vector<vector<int>> getScenicScores(vector<vector<int>> tGrid){
+    
+    vector<vector<int>> sGrid;
+
+    for(int i = 1; i < tGrid.size() - 1; i++){
+        
+        vector<int> tRow = tGrid[i], sRow;
+        for(int j = 1; j < tRow.size() - 1; j++){
+
+            int score = 1;
+            for(int k = 0; k < 4; k++)
+                score *= cardinalGTEDist(tGrid, i, j, Direction(k)); 
+
+            sRow.push_back(score);
+        }
+        sGrid.push_back(sRow);
+    }
+    return sGrid;
+}
+
 int main(){
 
     vector<vector<int>> treeGrid = parse(defaultFilePath);
-    vector<vector<uint8_t>> visibilityGrid = getVisibility(treeGrid);;
 
+    //part 1
+    vector<vector<uint8_t>> visibilityGrid = getVisibility(treeGrid);;
     cout << countVisible(visibilityGrid) << endl;
+
+    //part 2
+    vector<vector<int>> scenicScores = getScenicScores(treeGrid);
+    cout << max(scenicScores) << endl;
     return 0;
 }
