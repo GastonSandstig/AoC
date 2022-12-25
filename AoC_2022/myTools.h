@@ -65,6 +65,62 @@ int max(vector<vector<int>> grid){
     return maxInt;    
 }
 
+int product(const vector<int> &vec){
+
+    int p = 1;
+    for(const int factor : vec)
+        p *= factor;
+    return p;
+}
+
+vector<int> factorize(int num){
+
+    vector<int> factors;
+
+    int divisor = 1;
+    while(divisor++){
+
+        if(num < 2)
+            return factors;
+
+        if(divisor*divisor > num){
+            factors.push_back(num);
+            return factors;
+        }
+
+        while(num % divisor == 0){
+            num /= divisor;
+            factors.push_back(divisor);
+        }
+    }
+    return factors;
+}
+
+int leastCommonMultiple(int a, int b){
+
+    vector<int>
+        vecA = factorize(a),
+        vecB = factorize(b);
+
+    for(int aFactor : vecA)
+        for(int i = 0; i < vecB.size(); i++)
+            if(aFactor == vecB[i]){
+                vecB.erase( vecB.begin() + i-- );
+                break;
+            }
+    vecA.insert( vecA.end(), vecB.begin(), vecB.end() );
+
+    return product(vecA);
+}
+
+int leastCommonMultiple(vector<int> vec){
+
+    int lcm = 1;
+    for(int number : vec)
+        lcm = leastCommonMultiple(lcm, number);
+    return lcm;
+}
+
 int clamp(int val, int lb, int ub){
     if(val < lb)
         return lb;
